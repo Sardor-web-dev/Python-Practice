@@ -36,10 +36,12 @@ def check_access(user):
     else: 
         message = "Добро пожаловать"
     if "Python" in user["skills"]: 
-        message = " Можно изучать Django"
+        message += " Можно изучать Django"
     
-    return f"{user['name']} - {message}"
-
+    return {
+        "name": user["name"],
+        "access": message
+    }
 # for u in users:        
 #     result = check_access(u)
     # print(result)
@@ -53,4 +55,14 @@ def get_users_with_access(users):
     return results
     
 access_users = get_users_with_access(users)
-print(access_users)
+
+def users_api(users):
+    users_json = get_users_with_access(users)
+    
+    return {
+        "status": "success",
+        "count": len(users_json),
+        "data": users_json
+    }
+
+print(users_api(users))    
