@@ -28,9 +28,7 @@ users = [
     {"name": "Bob", "age": 18, "skills": ["PHP", "JS"]},
 ]
 
-def check_access(user):
-    message = ""
-    
+def check_access(user):    
     if user["age"] < 18: 
         message = "Доступ запрещен"
     else: 
@@ -56,7 +54,7 @@ def get_users_with_access(users):
     
 access_users = get_users_with_access(users)
 
-def users_api(users):
+def users_api():
     users_json = get_users_with_access(users)
     
     return {
