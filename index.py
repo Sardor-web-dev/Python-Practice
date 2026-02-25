@@ -54,13 +54,38 @@ def get_users_with_access(users):
     
 access_users = get_users_with_access(users)
 
-def users_api():
+def sort_users(users):
+    sorted_users = []
+    for u in users: 
+        if "Добро пожаловать" in u["access"]:
+            sorted_users.append(u)
+    return sorted_users
+
+def users_api(request):
     users_json = get_users_with_access(users)
+    adults = sort_users(users_json)
     
+    if request["method"] != "GET":
+        return {
+            "status": "error",
+            "message": "Method not allowed"
+        }
+        
+    if request.get("only_adults"):
+        return {
+            "status": "success",
+            "count": len(adults),
+            "data": adults
+        }
+
     return {
         "status": "success",
         "count": len(users_json),
         "data": users_json
     }
 
-print(users_api(users))    
+request = {
+    "method": "GET",
+    "only_adults": True
+}
+print(users_api(request))    
